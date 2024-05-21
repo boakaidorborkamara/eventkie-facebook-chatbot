@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
+const request = require("request");
 
 app.get("/", function (req, res) {
   res.send("Hello World");
@@ -98,7 +99,7 @@ function callSendAPI(sender_psid, response) {
   request(
     {
       uri: "https://graph.facebook.com/v2.6/me/messages",
-      qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
+      qs: { access_token: process.env.VERIFY_TOKEN },
       method: "POST",
       json: request_body,
     },
