@@ -1,7 +1,9 @@
 const express = require("express");
-const app = express();
 require("dotenv").config();
 const request = require("request");
+
+const app = express();
+app.use(express.json());
 
 // define tokens
 let PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
@@ -83,6 +85,8 @@ app.get("/", function (req, res) {
 app.post("/webhook", (req, res) => {
   let body = req.body;
 
+  console.log("body", req.body);
+
   // Send a 200 OK response if this is a page webhook
 
   if (body.object === "page") {
@@ -92,6 +96,7 @@ app.post("/webhook", (req, res) => {
 
       // Get the sender PSID
       let sender_psid = webhook_event.sender.id;
+      console.log(sender_psid);
 
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
@@ -111,8 +116,10 @@ app.post("/webhook", (req, res) => {
   }
 });
 
-// Add support for GET requests webhook
+// verify webhook
 app.get("/messaging-webhook", (req, res) => {
+  console.log("verifying token");
+
   // Parse the query params
   let mode = req.query["hub.mode"];
   let token = req.query["hub.verify_token"];
@@ -133,5 +140,5 @@ app.get("/messaging-webhook", (req, res) => {
 });
 
 app.listen(3600, () => {
-  console.log("Server is listening");
+  console.log("Server is listening on port");
 });
