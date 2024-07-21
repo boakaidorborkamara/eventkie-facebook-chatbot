@@ -1,6 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const request = require("request");
+const axios = require("axios");
 
 const app = express();
 app.use(express.json());
@@ -10,7 +11,7 @@ let PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 let VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
 // Handles messages events
-function handleMessage(sender_psid, received_message) {
+async function handleMessage(sender_psid, received_message) {
   let response;
 
   // Check if the message contains text
@@ -22,14 +23,14 @@ function handleMessage(sender_psid, received_message) {
   }
 
   // Sends the response message
-  callSendAPI(sender_psid, response);
+  await callSendAPI(sender_psid, response);
 }
 
 // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {}
 
 // Sends response messages via the Send API
-function callSendAPI(sender_psid, response) {
+async function callSendAPI(sender_psid, response) {
   // Construct the message body
   let request_body = {
     recipient: {
@@ -39,21 +40,27 @@ function callSendAPI(sender_psid, response) {
   };
 
   // Send the HTTP request to the Messenger Platform
-  request(
-    {
-      uri: "https://graph.facebook.com/v2.6/me/messages",
-      qs: { access_token: PAGE_ACCESS_TOKEN },
-      method: "POST",
-      json: request_body,
-    },
-    (err, res, body) => {
-      if (!err) {
-        console.log("message sent!");
-      } else {
-        console.error("Unable to send message:" + err);
-      }
-    }
+  // request(
+  //   {
+  //     uri: "https://graph.facebook.com/v2.6/me/messages",
+  //     qs: { access_token: PAGE_ACCESS_TOKEN },
+  //     method: "POST",
+  //     json: request_body,
+  //   },
+  //   (err, res, body) => {
+  //     if (!err) {
+  //       console.log("message sent!");
+  //     } else {
+  //       console.error("Unable to send message:" + err);
+  //     }
+  //   }
+  // );
+
+  let result = await axios.post(
+    `https://graph.facebook.com/v2.6/me/messages?access_token:${PAGE_ACCESS_TOKEN}`
   );
+
+  console.log("response", result);
 }
 
 // Verify that the callback came from Facebook.
@@ -90,9 +97,10 @@ app.post("/webhook", (req, res) => {
   // Send a 200 OK response if this is a page webhook
 
   if (body.object === "page") {
-    body.entry.forEach(function (entry) {
+    body.entry.forEach(async function (entry) {
       // Gets the body of the webhook event
       let webhook_event = entry.messaging[0];
+      console.log(webhook_event);
 
       // Get the sender PSID
       let sender_psid = webhook_event.sender.id;
@@ -101,11 +109,14 @@ app.post("/webhook", (req, res) => {
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
       if (webhook_event.message) {
-        handleMessage(sender_psid, webhook_event.message);
+        await handleMessage(sender_psid, webhook_event.message);
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback);
       }
     });
+
+    // Return a '200 OK' response to all events
+    res.status(200).send("EVENT_RECEIVED");
 
     // Returns a '200 OK' response to all requests
     res.status(200).send("EVENT_RECEIVED");
