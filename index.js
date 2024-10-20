@@ -94,7 +94,7 @@ app.post("/webhook", (req, res) => {
     body.entry.forEach(function (entry) {
       // Gets the body of the webhook event
       let webhook_event = entry.messaging[0];
-      console.log(webhook_event);
+      console.log("web", webhook_event);
 
       // Get the sender PSID
       let sender_psid = webhook_event.sender.id;
@@ -108,9 +108,6 @@ app.post("/webhook", (req, res) => {
         handlePostback(sender_psid, webhook_event.postback);
       }
     });
-
-    // Return a '200 OK' response to all events
-    res.status(200).send("EVENT_RECEIVED");
 
     // Returns a '200 OK' response to all requests
     res.status(200).send("EVENT_RECEIVED");
