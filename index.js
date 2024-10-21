@@ -42,7 +42,7 @@ function callSendAPI(sender_psid, response) {
   // Send the HTTP request to the Messenger Platform
   request(
     {
-      uri: "https://graph.facebook.com/v2.6/me/messages",
+      uri: "https://graph.facebook.com/v19.0/me/messages",
       qs: { access_token: PAGE_ACCESS_TOKEN },
       method: "POST",
       json: request_body,
@@ -144,7 +144,7 @@ app.get("/messaging-webhook", (req, res) => {
 ////////---------------
 // Set Get Started and Welcome Message
 const setGetStartedAndWelcomeMessage = async () => {
-  const url = `https://graph.facebook.com/v2.6/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`;
+  const url = `https://graph.facebook.com/v19.0/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`;
 
   const data = {
     get_started: {
@@ -168,7 +168,7 @@ const setGetStartedAndWelcomeMessage = async () => {
 
 // Set Persistent Menu
 const setPersistentMenu = async () => {
-  const url = `https://graph.facebook.com/v2.6/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`;
+  const url = `https://graph.facebook.com/v19.0/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`;
 
   const data = {
     persistent_menu: [
