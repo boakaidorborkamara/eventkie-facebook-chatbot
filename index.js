@@ -153,7 +153,7 @@ const setGetStartedAndWelcomeMessage = async () => {
     greeting: [
       {
         locale: "default",
-        text: "Hello! I Ticketzor, an event & ticketing 🎟️ chatbot. I can help you find and book events happening around you. Click the Get Started button below, and let's start exploring 😜...",
+        text: "Hi! I'm Ticketzor, your event & ticketing 🎟️ chatbot. Let me help you discover and book events happening in Liberia. Click Get Started to begin exploring! 😄",
       },
     ],
   };
