@@ -12,6 +12,8 @@ let VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
+  console.log("sender's id", sender_psid);
+
   let response;
 
   // Check if the message contains text
@@ -23,7 +25,7 @@ function handleMessage(sender_psid, received_message) {
   }
 
   // Sends the response message
-  callSendAPI(sender_psid, response);
+  // callSendAPI(sender_psid, response);
 }
 
 // Handles messaging_postbacks events
@@ -98,7 +100,7 @@ app.post("/webhook", (req, res) => {
 
       // Get the sender PSID
       let sender_psid = webhook_event.sender.id;
-      console.log(sender_psid);
+      console.log("sender id", sender_psid);
 
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
