@@ -178,18 +178,29 @@ const setPersistentMenu = async () => {
         call_to_actions: [
           {
             type: "postback",
+            title: "Home",
+            payload: "🏠HOME",
+          },
+          {
+            type: "postback",
             title: "Browse Events",
-            payload: "BROWSE_EVENTS",
+            payload: "😜BROWSE_EVENTS",
           },
           {
             type: "postback",
             title: "My Tickets",
-            payload: "MY_TICKETS",
+            payload: "🎟️MY_TICKETS",
           },
           {
             type: "postback",
-            title: "Help & Support",
-            payload: "HELP_SUPPORT",
+            title: "Give Feedback",
+            payload: "💭GIVE_FEEDBACK",
+          },
+          ,
+          {
+            type: "postback",
+            title: "About Ticketzor",
+            payload: "🤷‍♂️ABOUT_TICKETZOR",
           },
         ],
       },
