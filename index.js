@@ -141,9 +141,10 @@ app.get("/messaging-webhook", (req, res) => {
   }
 });
 
+////////---------------
 // Set Get Started and Welcome Message
 const setGetStartedAndWelcomeMessage = async () => {
-  const url = `https://graph.facebook.com/v16.0/me/messenger_profile?access_token=${process.env.PAGE_ACCESS_TOKEN}`;
+  const url = `https://graph.facebook.com/v2.6/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`;
 
   const data = {
     get_started: {
@@ -167,7 +168,7 @@ const setGetStartedAndWelcomeMessage = async () => {
 
 // Set Persistent Menu
 const setPersistentMenu = async () => {
-  const url = `https://graph.facebook.com/v16.0/me/messenger_profile?access_token=${process.env.PAGE_ACCESS_TOKEN}`;
+  const url = `https://graph.facebook.com/v2.6/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`;
 
   const data = {
     persistent_menu: [
@@ -205,7 +206,7 @@ const setPersistentMenu = async () => {
 
 // Send Quick Replies
 const sendQuickReplies = async (userId) => {
-  const url = `https://graph.facebook.com/v16.0/me/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`;
+  const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${PAGE_ACCESS_TOKEN}`;
 
   const data = {
     recipient: {
@@ -243,4 +244,6 @@ const sendQuickReplies = async (userId) => {
 
 app.listen(3600, () => {
   console.log("Server is listening on port");
+  setGetStartedAndWelcomeMessage();
+  setPersistentMenu();
 });
