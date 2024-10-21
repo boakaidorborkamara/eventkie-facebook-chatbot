@@ -153,7 +153,7 @@ const setGetStartedAndWelcomeMessage = async () => {
     greeting: [
       {
         locale: "default",
-        text: "Welcome to [Your Event Platform]! I can help you browse events and buy tickets.",
+        text: "Welcome to Ticket! I can help you browse events and buy tickets.",
       },
     ],
   };
@@ -244,6 +244,7 @@ const sendQuickReplies = async (userId) => {
 
 app.listen(3600, () => {
   console.log("Server is listening on port");
-  setGetStartedAndWelcomeMessage();
+
   setPersistentMenu();
+  setGetStartedAndWelcomeMessage();
 });
