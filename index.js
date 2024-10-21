@@ -18,7 +18,7 @@ function handleMessage(sender_psid, received_message) {
   if (received_message.text) {
     // Create the payload for a basic text message
     response = {
-      text: `You sent the message: "${received_message.text}". Now send me an image!`,
+      text: `"Hi there! 👋 Welcome to Ticketzor! Looking to attend an event? 🎉 I can help you find and purchase tickets right here. How can I assist you today?"`,
     };
   }
 
@@ -140,6 +140,106 @@ app.get("/messaging-webhook", (req, res) => {
     }
   }
 });
+
+// Set Get Started and Welcome Message
+const setGetStartedAndWelcomeMessage = async () => {
+  const url = `https://graph.facebook.com/v16.0/me/messenger_profile?access_token=${process.env.PAGE_ACCESS_TOKEN}`;
+
+  const data = {
+    get_started: {
+      payload: "GET_STARTED_PAYLOAD",
+    },
+    greeting: [
+      {
+        locale: "default",
+        text: "Welcome to [Your Event Platform]! I can help you browse events and buy tickets.",
+      },
+    ],
+  };
+
+  try {
+    await axios.post(url, data);
+    console.log("Get Started Button and Welcome Message set successfully.");
+  } catch (error) {
+    console.error("Error setting Get Started button:", error.response.data);
+  }
+};
+
+// Set Persistent Menu
+const setPersistentMenu = async () => {
+  const url = `https://graph.facebook.com/v16.0/me/messenger_profile?access_token=${process.env.PAGE_ACCESS_TOKEN}`;
+
+  const data = {
+    persistent_menu: [
+      {
+        locale: "default",
+        composer_input_disabled: false,
+        call_to_actions: [
+          {
+            type: "postback",
+            title: "Browse Events",
+            payload: "BROWSE_EVENTS",
+          },
+          {
+            type: "postback",
+            title: "My Tickets",
+            payload: "MY_TICKETS",
+          },
+          {
+            type: "postback",
+            title: "Help & Support",
+            payload: "HELP_SUPPORT",
+          },
+        ],
+      },
+    ],
+  };
+
+  try {
+    await axios.post(url, data);
+    console.log("Persistent Menu set successfully.");
+  } catch (error) {
+    console.error("Error setting Persistent Menu:", error.response.data);
+  }
+};
+
+// Send Quick Replies
+const sendQuickReplies = async (userId) => {
+  const url = `https://graph.facebook.com/v16.0/me/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`;
+
+  const data = {
+    recipient: {
+      id: userId,
+    },
+    message: {
+      text: "How can I help you today?",
+      quick_replies: [
+        {
+          content_type: "text",
+          title: "Browse Events",
+          payload: "BROWSE_EVENTS",
+        },
+        {
+          content_type: "text",
+          title: "My Tickets",
+          payload: "MY_TICKETS",
+        },
+        {
+          content_type: "text",
+          title: "Help & Support",
+          payload: "HELP_SUPPORT",
+        },
+      ],
+    },
+  };
+
+  try {
+    await axios.post(url, data);
+    console.log("Sent Quick Replies:", data);
+  } catch (error) {
+    console.error("Error sending quick replies:", error.response.data);
+  }
+};
 
 app.listen(3600, () => {
   console.log("Server is listening on port");
