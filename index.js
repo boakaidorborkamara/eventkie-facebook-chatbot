@@ -85,7 +85,7 @@ app.get("/", function (req, res) {
 });
 
 // endpoint for webhook
-app.post("/webhook", (req, res) => {
+app.post("/messaging-webhook", (req, res) => {
   let body = req.body;
 
   console.log("body", req.body);
