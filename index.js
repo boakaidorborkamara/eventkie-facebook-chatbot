@@ -30,7 +30,7 @@ async function handleMessage(senderPsid, receivedMessage) {
     };
 
     let response2 = {
-      text: "Hey, I found 3 events for Music Category.",
+      text: "Hey, I found 3 events that match Music Category.",
     };
 
     let response3 = {
@@ -58,7 +58,7 @@ async function handleMessage(senderPsid, receivedMessage) {
                 {
                   type: "postback",
                   title: "Book Now",
-                  payload: "DEVELOPER_DEFINED_PAYLOAD",
+                  payload: "{action:BOOK_NOW, event_id: 8484884}",
                 },
               ],
             },
