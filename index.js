@@ -7,79 +7,103 @@ const app = express();
 app.use(express.json());
 
 // define tokens
-let PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-let VERIFY_TOKEN = process.env.VERIFY_TOKEN;
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
+
+//chatbot service
+const chatbotService = require("./service/chatbot-service");
 
 // Handles messages events
-function handleMessage(sender_psid, received_message) {
+function handleMessage(senderPsid, receivedMessage) {
   let response;
 
-  // Check if the message contains text
-  if (received_message.text) {
-    // Create the payload for a basic text message
+  // Checks if the message contains text
+  if (receivedMessage.text) {
+    // Create the payload for a basic text message, which
+    // will be added to the body of your request to the Send API
     response = {
-      text: `"Hi there! 👋 Welcome to Ticketzor! Looking to attend an event? 🎉 I can help you find and purchase tickets right here. How can I assist you today?"`,
+      text: `You sent the message: '${receivedMessage.text}'. Now send me an attachment!`,
+    };
+  } else if (receivedMessage.attachments) {
+    // Get the URL of the message attachment
+    let attachmentUrl = receivedMessage.attachments[0].payload.url;
+    response = {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "generic",
+          elements: [
+            {
+              title: "Is this the right picture?",
+              subtitle: "Tap a button to answer.",
+              image_url: attachmentUrl,
+              buttons: [
+                {
+                  type: "postback",
+                  title: "Yes!",
+                  payload: "yes",
+                },
+                {
+                  type: "postback",
+                  title: "No!",
+                  payload: "no",
+                },
+              ],
+            },
+          ],
+        },
+      },
     };
   }
 
-  // Sends the response message
-  callSendAPI(sender_psid, response);
+  // Send the response message
+  callSendAPI(senderPsid, response);
 }
 
 // Handles messaging_postbacks events
-function handlePostback(sender_psid, received_postback) {}
+function handlePostback(senderPsid, receivedPostback) {
+  let response;
 
-// Sends response messages via the Send API
-function callSendAPI(sender_psid, response) {
-  // Construct the message body
-  let request_body = {
-    recipient: {
-      id: sender_psid,
-    },
-    message: response,
-  };
+  // Get the payload for the postback
+  let payload = receivedPostback.payload;
 
-  // Send the HTTP request to the Messenger Platform
-  request(
-    {
-      uri: "https://graph.facebook.com/v19.0/me/messages",
-      qs: { access_token: PAGE_ACCESS_TOKEN },
-      method: "POST",
-      json: request_body,
-    },
-    (err, res, body) => {
-      if (!err) {
-        console.log("message sent!");
-      } else {
-        console.error("Unable to send message:" + err);
-      }
-    }
-  );
+  // handle get statarted
+  if (payload === "GET_STARTED") {
+    response = { text: "About to get started" };
+  }
+
+  // Set the response based on the postback payload
+  if (payload === "yes") {
+    response = { text: "Thanks!" };
+  } else if (payload === "no") {
+    response = { text: "Oops, try sending another image." };
+  }
+  // Send the message to acknowledge the postback
+  chatbotService.sendMessage(senderPsid, response);
 }
 
 // Verify that the callback came from Facebook.
-function verifyRequestSignature(req, res, buf) {
-  var signature = req.headers["x-hub-signature-256"];
+// function verifyRequestSignature(req, res, buf) {
+//   var signature = req.headers["x-hub-signature-256"];
 
-  if (!signature) {
-    console.warn(`Couldn't find "x-hub-signature-256" in headers.`);
-  } else {
-    var elements = signature.split("=");
-    var signatureHash = elements[1];
-    var expectedHash = crypto
-      .createHmac("sha256", config.appSecret)
-      .update(buf)
-      .digest("hex");
-    if (signatureHash != expectedHash) {
-      throw new Error("Couldn't validate the request signature.");
-    }
-  }
-}
+//   if (!signature) {
+//     console.warn(`Couldn't find "x-hub-signature-256" in headers.`);
+//   } else {
+//     var elements = signature.split("=");
+//     var signatureHash = elements[1];
+//     var expectedHash = crypto
+//       .createHmac("sha256", config.appSecret)
+//       .update(buf)
+//       .digest("hex");
+//     if (signatureHash != expectedHash) {
+//       throw new Error("Couldn't validate the request signature.");
+//     }
+//   }
+// }
 
 app.get("/", function (req, res) {
+  console.log("Home Route");
   res.send("Hello World");
-  console.log("PAGE ACCESS TOKEN", PAGE_ACCESS_TOKEN);
-  console.log("VERIFY TOKEN", VERIFY_TOKEN);
 });
 
 // endpoint for webhook
@@ -111,7 +135,6 @@ app.post("/messaging-webhook", (req, res) => {
 
     // Returns a '200 OK' response to all requests
     res.status(200).send("EVENT_RECEIVED");
-    // Determine which webhooks were triggered and get sender PSIDs and locale, message content and more.
   } else {
     // Return a '404 Not Found' if event is not from a page subscription
     res.sendStatus(404);
@@ -141,121 +164,9 @@ app.get("/messaging-webhook", (req, res) => {
   }
 });
 
-////////---------------
-// Set Get Started and Welcome Message
-const setGetStartedAndWelcomeMessage = async () => {
-  const url = `https://graph.facebook.com/v19.0/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`;
-
-  const data = {
-    get_started: {
-      payload: "GET_STARTED_PAYLOAD",
-    },
-    greeting: [
-      {
-        locale: "default",
-        text: "Hi! I'm Ticketzor, your event & ticketing 🎟️ chatbot. Let me help you discover and book events happening in Liberia. Click Get Started to begin exploring! 😄",
-      },
-    ],
-  };
-
-  try {
-    await axios.post(url, data);
-    console.log("Get Started Button and Welcome Message set successfully.");
-  } catch (error) {
-    console.error("Error setting Get Started button:", error.response.data);
-  }
-};
-
-// Set Persistent Menu
-const setPersistentMenu = async () => {
-  const url = `https://graph.facebook.com/v19.0/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`;
-
-  const data = {
-    persistent_menu: [
-      {
-        locale: "default",
-        composer_input_disabled: false,
-        call_to_actions: [
-          {
-            type: "postback",
-            title: "🏠Home",
-            payload: "HOME",
-          },
-          {
-            type: "postback",
-            title: "😜 Browse Events",
-            payload: "BROWSE_EVENTS",
-          },
-          {
-            type: "postback",
-            title: "🎟️ My Tickets",
-            payload: "MY_TICKETS",
-          },
-          {
-            type: "postback",
-            title: "💭 Give Feedback",
-            payload: "GIVE_FEEDBACK",
-          },
-
-          {
-            type: "postback",
-            title: "🤷‍♂️ About Ticketzor",
-            payload: "ABOUT_TICKETZOR",
-          },
-        ],
-      },
-    ],
-  };
-
-  try {
-    await axios.post(url, data);
-    console.log("Persistent Menu set successfully.");
-  } catch (error) {
-    console.error("Error setting Persistent Menu:", error.response.data);
-  }
-};
-
-// Send Quick Replies
-const sendQuickReplies = async (userId) => {
-  const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${PAGE_ACCESS_TOKEN}`;
-
-  const data = {
-    recipient: {
-      id: userId,
-    },
-    message: {
-      text: "How can I help you today?",
-      quick_replies: [
-        {
-          content_type: "text",
-          title: "Browse Events",
-          payload: "BROWSE_EVENTS",
-        },
-        {
-          content_type: "text",
-          title: "My Tickets",
-          payload: "MY_TICKETS",
-        },
-        {
-          content_type: "text",
-          title: "Help & Support",
-          payload: "HELP_SUPPORT",
-        },
-      ],
-    },
-  };
-
-  try {
-    await axios.post(url, data);
-    console.log("Sent Quick Replies:", data);
-  } catch (error) {
-    console.error("Error sending quick replies:", error.response.data);
-  }
-};
-
 app.listen(3600, () => {
   console.log("Server is listening on port");
 
-  setPersistentMenu();
-  setGetStartedAndWelcomeMessage();
+  chatbotService.setPersistentMenu;
+  chatbotService.setGetStartedAndWelcomeMessage;
 });
