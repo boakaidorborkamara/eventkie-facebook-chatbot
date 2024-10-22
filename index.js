@@ -14,7 +14,7 @@ const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const chatbotService = require("./service/chatbot-service");
 
 // Handles messages events
-function handleMessage(senderPsid, receivedMessage) {
+async function handleMessage(senderPsid, receivedMessage) {
   let response;
 
   // Checks if the message contains text
@@ -57,7 +57,7 @@ function handleMessage(senderPsid, receivedMessage) {
   }
 
   // Send the response message
-  chatbotService.sendMessage(senderPsid, response);
+  await chatbotService.sendMessage(senderPsid, response);
 }
 
 // Handles messaging_postbacks events
@@ -179,7 +179,7 @@ app.post("/messaging-webhook", (req, res) => {
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
       if (webhook_event.message) {
-        handleMessage(sender_psid, webhook_event.message);
+        await handleMessage(sender_psid, webhook_event.message);
       } else if (webhook_event.postback) {
         await handlePostback(sender_psid, webhook_event.postback);
       }
