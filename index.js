@@ -79,12 +79,12 @@ const handlePostback = async (senderPsid, receivedPostback) => {
       quick_replies: [
         {
           content_type: "text",
-          title: "Browse Events 🎫",
+          title: "Browse Events 🎉",
           payload: "BROWSE_EVENTS",
         },
         {
           content_type: "text",
-          title: "Check My Tickets",
+          title: "Check My Tickets 🎫",
           payload: "CHECK_MY_TICKETS",
         },
       ],
@@ -92,11 +92,43 @@ const handlePostback = async (senderPsid, receivedPostback) => {
 
     // Send the message to get started postback the postback
     await chatbotService.sendMessage(senderPsid, response1);
+
     await chatbotService.sendMessage(senderPsid, response2);
   }
 
-  // Set the response based on the postback payload
+  // handle browse event
+  if (payload === "BROWSE_EVENTS") {
+    let response1 = {
+      text: "Great! Please choose the type of event you're interested in.",
+      quick_replies: [
+        {
+          content_type: "text",
+          title: "Music 🎵",
+          payload: "MUSIC",
+        },
+        {
+          content_type: "text",
+          title: "Sports ⚽",
+          payload: "SPORTS",
+        },
+        {
+          content_type: "text",
+          title: "Business & Tech 💼",
+          payload: "BUSINESS_AND_TECH",
+        },
+        {
+          content_type: "text",
+          title: "All Events 📅",
+          payload: "ALL_EVENTS",
+        },
+      ],
+    };
+
+    await chatbotService.sendMessage(senderPsid, response1);
+  }
+
   if (payload === "yes") {
+    // Set the response based on the postback payload
     response = { text: "Thanks!" };
   } else if (payload === "no") {
     response = { text: "Oops, try sending another image." };
