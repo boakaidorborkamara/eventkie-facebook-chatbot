@@ -32,9 +32,9 @@ async function handleMessage(senderPsid, receivedMessage) {
           template_type: "generic",
           elements: [
             {
-              title: "Welcome!",
+              title: "CIC Concert",
               image_url:
-                "https://raw.githubusercontent.com/fbsamples/original-coast-clothing/main/public/styles/male-work.jpg",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYY0ETn4cSFt0dXSYjtUmXG2kbQ6oE3WJndA&s",
               subtitle: "We have the right hat for everyone.",
               default_action: {
                 type: "web_url",
@@ -50,6 +50,52 @@ async function handleMessage(senderPsid, receivedMessage) {
                 {
                   type: "postback",
                   title: "Start Chatting",
+                  payload: "DEVELOPER_DEFINED_PAYLOAD",
+                },
+              ],
+            },
+            {
+              title: "MC Caro Concert",
+              image_url:
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGAmf1AQS4nSvEA7rpjCq4KG8BYhstqHQCYw&s",
+              subtitle: "We have the right hat for everyone.",
+              default_action: {
+                type: "web_url",
+                url: "https://www.originalcoastclothing.com/",
+                webview_height_ratio: "tall",
+              },
+              buttons: [
+                {
+                  type: "web_url",
+                  url: "https://www.originalcoastclothing.com/",
+                  title: "View Website",
+                },
+                {
+                  type: "postback",
+                  title: "Start Chatting",
+                  payload: "DEVELOPER_DEFINED_PAYLOAD",
+                },
+              ],
+            },
+            {
+              title: "Welcome!",
+              image_url:
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLVYPczi4Gol0cUgc33vC3-ZEQwcj2F0v8Zw&s",
+              subtitle: "We have the right hat for everyone.",
+              default_action: {
+                type: "web_url",
+                url: "https://www.originalcoastclothing.com/",
+                webview_height_ratio: "tall",
+              },
+              buttons: [
+                {
+                  type: "web_url",
+                  url: "https://www.originalcoastclothing.com/",
+                  title: "View Website",
+                },
+                {
+                  type: "postback",
+                  title: "Anti Drugs Awareness",
                   payload: "DEVELOPER_DEFINED_PAYLOAD",
                 },
               ],
