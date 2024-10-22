@@ -30,13 +30,17 @@ async function handleMessage(senderPsid, receivedMessage) {
     };
 
     let response2 = {
+      text: "Here are some exciting event for the category you selected.",
+    };
+
+    let response3 = {
       attachment: {
         type: "template",
         payload: {
           template_type: "generic",
           elements: [
             {
-              title: "Jzyno Concert",
+              title: "CIC Concert",
               image_url:
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYY0ETn4cSFt0dXSYjtUmXG2kbQ6oE3WJndA&s",
               subtitle: "🗓️Wed Oct 09 2024  📍Sharma House, Brewevill Liberia",
@@ -47,14 +51,14 @@ async function handleMessage(senderPsid, receivedMessage) {
               },
               buttons: [
                 {
-                  type: "postback",
+                  type: "web_url",
+                  url: "https://www.originalcoastclothing.com/",
                   title: "View Details",
-                  payload: "DEVELOPER_DEFINED_PAYLOAD",
                 },
                 {
                   type: "postback",
                   title: "Book Now",
-                  payload: "{action:BOOK_NOW, event_id: 8484884}",
+                  payload: "DEVELOPER_DEFINED_PAYLOAD",
                 },
               ],
             },
@@ -64,9 +68,9 @@ async function handleMessage(senderPsid, receivedMessage) {
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGAmf1AQS4nSvEA7rpjCq4KG8BYhstqHQCYw&s",
               subtitle: "🗓️Wed Oct 09 2024  📍Sharma House, Brewevill Liberia",
               default_action: {
-                type: "postback",
-                title: "View Details",
-                payload: "DEVELOPER_DEFINED_PAYLOAD",
+                type: "web_url",
+                url: "https://www.originalcoastclothing.com/",
+                webview_height_ratio: "tall",
               },
               buttons: [
                 {
@@ -94,9 +98,9 @@ async function handleMessage(senderPsid, receivedMessage) {
               },
               buttons: [
                 {
-                  type: "postback",
+                  type: "web_url",
+                  url: "https://www.originalcoastclothing.com/",
                   title: "View Details",
-                  payload: "DEVELOPER_DEFINED_PAYLOAD",
                 },
                 {
                   type: "postback",
@@ -137,8 +141,7 @@ async function handleMessage(senderPsid, receivedMessage) {
     };
 
     await chatbotService.sendMessage(senderPsid, response1);
-    await chatbotService.sendMessage(senderPsid, response2);
-    await chatbotService.sendMessage(senderPsid, categories);
+    await chatbotService.sendMessage(senderPsid, response3);
   } else if (receivedMessage.attachments) {
     // Get the URL of the message attachment
     let attachmentUrl = receivedMessage.attachments[0].payload.url;
