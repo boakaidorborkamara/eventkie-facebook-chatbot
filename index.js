@@ -141,7 +141,123 @@ async function handleMessage(senderPsid, receivedMessage) {
     };
 
     await chatbotService.sendMessage(senderPsid, response1);
+    await chatbotService.sendMessage(senderPsid, response2);
     await chatbotService.sendMessage(senderPsid, response3);
+    await chatbotService.sendMessage(senderPsid, categories);
+
+    //===================
+    //  let response1 = {
+    //    text: "Fetching events... please wait.",
+    //  };
+
+    //  let response2 = {
+    //    attachment: {
+    //      type: "template",
+    //      payload: {
+    //        template_type: "generic",
+    //        elements: [
+    //          {
+    //            title: "Jzyno Concert",
+    //            image_url:
+    //              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYY0ETn4cSFt0dXSYjtUmXG2kbQ6oE3WJndA&s",
+    //            subtitle: "🗓️Wed Oct 09 2024  📍Sharma House, Brewevill Liberia",
+    //            default_action: {
+    //              type: "web_url",
+    //              url: "https://www.originalcoastclothing.com/",
+    //              webview_height_ratio: "tall",
+    //            },
+    //            buttons: [
+    //              {
+    //                type: "postback",
+    //                title: "View Details",
+    //                payload: "DEVELOPER_DEFINED_PAYLOAD",
+    //              },
+    //              {
+    //                type: "postback",
+    //                title: "Book Now",
+    //                payload: "{action:BOOK_NOW, event_id: 8484884}",
+    //              },
+    //            ],
+    //          },
+    //          {
+    //            title: "MC Caro Concert",
+    //            image_url:
+    //              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGAmf1AQS4nSvEA7rpjCq4KG8BYhstqHQCYw&s",
+    //            subtitle: "🗓️Wed Oct 09 2024  📍Sharma House, Brewevill Liberia",
+    //            default_action: {
+    //              type: "postback",
+    //              title: "View Details",
+    //              payload: "DEVELOPER_DEFINED_PAYLOAD",
+    //            },
+    //            buttons: [
+    //              {
+    //                type: "web_url",
+    //                url: "https://www.originalcoastclothing.com/",
+    //                title: "View Details",
+    //              },
+    //              {
+    //                type: "postback",
+    //                title: "Book Now",
+    //                payload: "DEVELOPER_DEFINED_PAYLOAD",
+    //              },
+    //            ],
+    //          },
+    //          {
+    //            title: "Anti Drugs Awareness",
+    //            image_url:
+    //              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLVYPczi4Gol0cUgc33vC3-ZEQwcj2F0v8Zw&s",
+    //            subtitle: "🗓️Wed Oct 09 2024    📍Sharma House, Brewevill Liberia",
+    //            default_action: {
+    //              type: "web_url",
+    //              url: "https://www.originalcoastclothing.com/",
+    //              webview_height_ratio: "tall",
+    //            },
+    //            buttons: [
+    //              {
+    //                type: "postback",
+    //                title: "View Details",
+    //                payload: "DEVELOPER_DEFINED_PAYLOAD",
+    //              },
+    //              {
+    //                type: "postback",
+    //                title: "Book Now",
+    //                payload: "DEVELOPER_DEFINED_PAYLOAD",
+    //              },
+    //            ],
+    //          },
+    //        ],
+    //      },
+    //    },
+    //  };
+
+    //  let categories = {
+    //    quick_replies: [
+    //      {
+    //        content_type: "text",
+    //        title: "Music 🎵",
+    //        payload: "MUSIC",
+    //      },
+    //      {
+    //        content_type: "text",
+    //        title: "Sports ⚽",
+    //        payload: "SPORTS",
+    //      },
+    //      {
+    //        content_type: "text",
+    //        title: "Business & Tech 💼",
+    //        payload: "BUSINESS_AND_TECH",
+    //      },
+    //      {
+    //        content_type: "text",
+    //        title: "All Events 📅",
+    //        payload: "ALL_EVENTS",
+    //      },
+    //    ],
+    //  };
+
+    //  await chatbotService.sendMessage(senderPsid, response1);
+    //  await chatbotService.sendMessage(senderPsid, response2);
+    //  await chatbotService.sendMessage(senderPsid, categories);
   } else if (receivedMessage.attachments) {
     // Get the URL of the message attachment
     let attachmentUrl = receivedMessage.attachments[0].payload.url;
