@@ -13,6 +13,88 @@ const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 //chatbot service
 const chatbotService = require("./service/chatbot-service");
 
+// Verify that the callback came from Facebook.
+// function verifyRequestSignature(req, res, buf) {
+//   var signature = req.headers["x-hub-signature-256"];
+
+//   if (!signature) {
+//     console.warn(`Couldn't find "x-hub-signature-256" in headers.`);
+//   } else {
+//     var elements = signature.split("=");
+//     var signatureHash = elements[1];
+//     var expectedHash = crypto
+//       .createHmac("sha256", config.appSecret)
+//       .update(buf)
+//       .digest("hex");
+//     if (signatureHash != expectedHash) {
+//       throw new Error("Couldn't validate the request signature.");
+//     }
+//   }
+// }
+
+app.get("/", function (req, res) {
+  console.log("Home Route");
+  res.send("Hello World");
+});
+
+// endpoint for webhook
+app.post("/messaging-webhook", (req, res) => {
+  let body = req.body;
+
+  console.log("body", req.body);
+
+  // Send a 200 OK response if this is a page webhook
+
+  if (body.object === "page") {
+    body.entry.forEach(async function (entry) {
+      // Gets the body of the webhook event
+      let webhook_event = entry.messaging[0];
+      console.log("web", webhook_event);
+
+      // Get the sender PSID
+      let sender_psid = webhook_event.sender.id;
+      console.log(sender_psid);
+
+      // Check if the event is a message or postback and
+      // pass the event to the appropriate handler function
+      if (webhook_event.message) {
+        await handleMessage(sender_psid, webhook_event.message);
+      } else if (webhook_event.postback) {
+        await handlePostback(sender_psid, webhook_event.postback);
+      }
+    });
+
+    // Returns a '200 OK' response to all requests
+    res.status(200).send("EVENT_RECEIVED");
+  } else {
+    // Return a '404 Not Found' if event is not from a page subscription
+    res.sendStatus(404);
+  }
+});
+
+// verify webhook
+app.get("/messaging-webhook", (req, res) => {
+  console.log("verifying token");
+
+  // Parse the query params
+  let mode = req.query["hub.mode"];
+  let token = req.query["hub.verify_token"];
+  let challenge = req.query["hub.challenge"];
+
+  // Check if a token and mode is in the query string of the request
+  if (mode && token) {
+    // Check the mode and token sent is correct
+    if (mode === "subscribe" && token === VERIFY_TOKEN) {
+      // Respond with the challenge token from the request
+      console.log("WEBHOOK_VERIFIED");
+      res.status(200).send(challenge);
+    } else {
+      // Respond with '403 Forbidden' if verify tokens do not match
+      res.sendStatus(403);
+    }
+  }
+});
+
 // Handles messages events
 async function handleMessage(senderPsid, receivedMessage) {
   let response;
@@ -295,7 +377,7 @@ async function handleMessage(senderPsid, receivedMessage) {
 }
 
 // Handles messaging_postbacks events
-const handlePostback = async (senderPsid, receivedPostback) => {
+async function handlePostback(senderPsid, receivedPostback) {
   try {
     // Get the payload for the postback
     let payload = receivedPostback.payload;
@@ -304,21 +386,26 @@ const handlePostback = async (senderPsid, receivedPostback) => {
     // handle get statarted
     if (payload === "GET_STARTED_PAYLOAD") {
       let response1 = {
-        text: "Hi there! 👋 Welcome to Ticketzor! Looking to attend an event? 🎉 I can help you find and purchase tickets right here. ",
+        text: "Hi there! 🎉 Welcome to Ticketzor! I’m here to help you find and book events in Liberia. 🎟️ ",
       };
 
       let response2 = {
-        text: "How can I assist you today?",
+        text: "To get started, you can:",
         quick_replies: [
           {
             content_type: "text",
-            title: "Browse Events 🎉",
-            payload: "BROWSE_EVENTS",
+            title: "1️⃣ Browse Upcoming Events",
+            payload: "BROWSE_UPCOMING_EVENTS",
           },
           {
             content_type: "text",
-            title: "Check My Tickets 🎫",
-            payload: "CHECK_MY_TICKETS",
+            title: "2️⃣ Search for a Specific Event",
+            payload: "SEARCH_SPECIFIC_EVENT",
+          },
+          {
+            content_type: "text",
+            title: "3️⃣ Learn How It Works",
+            payload: "LEARN",
           },
         ],
       };
@@ -366,89 +453,7 @@ const handlePostback = async (senderPsid, receivedPostback) => {
   } catch (err) {
     console.log(err);
   }
-};
-
-// Verify that the callback came from Facebook.
-// function verifyRequestSignature(req, res, buf) {
-//   var signature = req.headers["x-hub-signature-256"];
-
-//   if (!signature) {
-//     console.warn(`Couldn't find "x-hub-signature-256" in headers.`);
-//   } else {
-//     var elements = signature.split("=");
-//     var signatureHash = elements[1];
-//     var expectedHash = crypto
-//       .createHmac("sha256", config.appSecret)
-//       .update(buf)
-//       .digest("hex");
-//     if (signatureHash != expectedHash) {
-//       throw new Error("Couldn't validate the request signature.");
-//     }
-//   }
-// }
-
-app.get("/", function (req, res) {
-  console.log("Home Route");
-  res.send("Hello World");
-});
-
-// endpoint for webhook
-app.post("/messaging-webhook", (req, res) => {
-  let body = req.body;
-
-  console.log("body", req.body);
-
-  // Send a 200 OK response if this is a page webhook
-
-  if (body.object === "page") {
-    body.entry.forEach(async function (entry) {
-      // Gets the body of the webhook event
-      let webhook_event = entry.messaging[0];
-      console.log("web", webhook_event);
-
-      // Get the sender PSID
-      let sender_psid = webhook_event.sender.id;
-      console.log(sender_psid);
-
-      // Check if the event is a message or postback and
-      // pass the event to the appropriate handler function
-      if (webhook_event.message) {
-        await handleMessage(sender_psid, webhook_event.message);
-      } else if (webhook_event.postback) {
-        await handlePostback(sender_psid, webhook_event.postback);
-      }
-    });
-
-    // Returns a '200 OK' response to all requests
-    res.status(200).send("EVENT_RECEIVED");
-  } else {
-    // Return a '404 Not Found' if event is not from a page subscription
-    res.sendStatus(404);
-  }
-});
-
-// verify webhook
-app.get("/messaging-webhook", (req, res) => {
-  console.log("verifying token");
-
-  // Parse the query params
-  let mode = req.query["hub.mode"];
-  let token = req.query["hub.verify_token"];
-  let challenge = req.query["hub.challenge"];
-
-  // Check if a token and mode is in the query string of the request
-  if (mode && token) {
-    // Check the mode and token sent is correct
-    if (mode === "subscribe" && token === VERIFY_TOKEN) {
-      // Respond with the challenge token from the request
-      console.log("WEBHOOK_VERIFIED");
-      res.status(200).send(challenge);
-    } else {
-      // Respond with '403 Forbidden' if verify tokens do not match
-      res.sendStatus(403);
-    }
-  }
-});
+}
 
 app.listen(3600, () => {
   console.log("Server is listening on port");
