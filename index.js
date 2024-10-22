@@ -40,7 +40,7 @@ async function handleMessage(senderPsid, receivedMessage) {
           template_type: "generic",
           elements: [
             {
-              title: "CIC Concert",
+              title: "Jzyno Concert",
               image_url:
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYY0ETn4cSFt0dXSYjtUmXG2kbQ6oE3WJndA&s",
               subtitle: "🗓️Wed Oct 09 2024  📍Sharma House, Brewevill Liberia",
