@@ -62,79 +62,76 @@ function handleMessage(senderPsid, receivedMessage) {
 
 // Handles messaging_postbacks events
 const handlePostback = async (senderPsid, receivedPostback) => {
-  let response;
+  try {
+    // Get the payload for the postback
+    let payload = receivedPostback.payload;
+    console.log("payloaddd", payload);
 
-  // Get the payload for the postback
-  let payload = receivedPostback.payload;
-  console.log("payloaddd", payload);
+    // handle get statarted
+    if (payload === "GET_STARTED_PAYLOAD") {
+      let response1 = {
+        text: "Hi there! 👋 Welcome to Ticketzor! Looking to attend an event? 🎉 I can help you find and purchase tickets right here. ",
+      };
 
-  // handle get statarted
-  if (payload === "GET_STARTED_PAYLOAD") {
-    let response1 = {
-      text: "Hi there! 👋 Welcome to Ticketzor! Looking to attend an event? 🎉 I can help you find and purchase tickets right here. ",
-    };
+      let response2 = {
+        text: "How can I assist you today?",
+        quick_replies: [
+          {
+            content_type: "text",
+            title: "Browse Events 🎉",
+            payload: "BROWSE_EVENTS",
+          },
+          {
+            content_type: "text",
+            title: "Check My Tickets 🎫",
+            payload: "CHECK_MY_TICKETS",
+          },
+        ],
+      };
 
-    let response2 = {
-      text: "How can I assist you today?",
-      quick_replies: [
-        {
-          content_type: "text",
-          title: "Browse Events 🎉",
-          payload: "BROWSE_EVENTS",
-        },
-        {
-          content_type: "text",
-          title: "Check My Tickets 🎫",
-          payload: "CHECK_MY_TICKETS",
-        },
-      ],
-    };
+      // Send the message to get started postback the postback
+      await chatbotService.sendMessage(senderPsid, response1);
 
-    // Send the message to get started postback the postback
-    await chatbotService.sendMessage(senderPsid, response1);
+      await chatbotService.sendMessage(senderPsid, response2);
+    }
 
-    await chatbotService.sendMessage(senderPsid, response2);
+    // handle browse event
+    if (payload === "BROWSE_EVENTS") {
+      let response1 = {
+        text: "Great! Please choose the type of event you're interested in.",
+        quick_replies: [
+          {
+            content_type: "text",
+            title: "Music 🎵",
+            payload: "MUSIC",
+          },
+          {
+            content_type: "text",
+            title: "Sports ⚽",
+            payload: "SPORTS",
+          },
+          {
+            content_type: "text",
+            title: "Business & Tech 💼",
+            payload: "BUSINESS_AND_TECH",
+          },
+          {
+            content_type: "text",
+            title: "All Events 📅",
+            payload: "ALL_EVENTS",
+          },
+        ],
+      };
+
+      await chatbotService.sendMessage(senderPsid, response1);
+    }
+
+    // handle display of events
+    if (payload === "ALL_EVENTS") {
+    }
+  } catch (err) {
+    console.log(err);
   }
-
-  // handle browse event
-  if (payload === "BROWSE_EVENTS") {
-    let response1 = {
-      text: "Great! Please choose the type of event you're interested in.",
-      quick_replies: [
-        {
-          content_type: "text",
-          title: "Music 🎵",
-          payload: "MUSIC",
-        },
-        {
-          content_type: "text",
-          title: "Sports ⚽",
-          payload: "SPORTS",
-        },
-        {
-          content_type: "text",
-          title: "Business & Tech 💼",
-          payload: "BUSINESS_AND_TECH",
-        },
-        {
-          content_type: "text",
-          title: "All Events 📅",
-          payload: "ALL_EVENTS",
-        },
-      ],
-    };
-
-    await chatbotService.sendMessage(senderPsid, response1);
-  }
-
-  if (payload === "yes") {
-    // Set the response based on the postback payload
-    response = { text: "Thanks!" };
-  } else if (payload === "no") {
-    response = { text: "Oops, try sending another image." };
-  }
-  // Send the message to acknowledge the postback
-  // chatbotService.sendMessage(senderPsid, response);
 };
 
 // Verify that the callback came from Facebook.

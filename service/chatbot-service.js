@@ -117,30 +117,41 @@ const sendQuickReplies = async (userId) => {
 
 // Sends response messages via the Send API
 async function sendMessage(sender_psid, response) {
-  // Construct the message body
-  let request_body = {
-    recipient: {
-      id: sender_psid,
-    },
-    message: response,
-  };
+  try {
+    // Construct the message body
+    let request_body = {
+      recipient: {
+        id: sender_psid,
+      },
+      message: response,
+    };
 
-  // Send the HTTP request to the Messenger Platform
-  request(
-    {
-      uri: "https://graph.facebook.com/v19.0/me/messages",
-      qs: { access_token: PAGE_ACCESS_TOKEN },
-      method: "POST",
-      json: request_body,
-    },
-    (err, res, body) => {
-      if (!err) {
-        console.log("message sent!");
-      } else {
-        console.error("Unable to send message:" + err);
-      }
-    }
-  );
+    // Send the HTTP request to the Messenger Platform
+    await axios.post(
+      `https://graph.facebook.com/v19.0/me/messages?qs=${{
+        access_token: PAGE_ACCESS_TOKEN,
+      }}`,
+      request_body
+    );
+  } catch (err) {
+    console.log(err);
+  }
+
+  //   request(
+  //     {
+  //       uri: "https://graph.facebook.com/v19.0/me/messages",
+  //       qs: { access_token: PAGE_ACCESS_TOKEN },
+  //       method: "POST",
+  //       json: request_body,
+  //     },
+  //     (err, res, body) => {
+  //       if (!err) {
+  //         console.log("message sent!");
+  //       } else {
+  //         console.error("Unable to send message:" + err);
+  //       }
+  //     }
+  //   );
 }
 
 const handleGreetings = () => {};
