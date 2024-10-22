@@ -57,7 +57,7 @@ function handleMessage(senderPsid, receivedMessage) {
   }
 
   // Send the response message
-  callSendAPI(senderPsid, response);
+  chatbotService.sendMessage(senderPsid, response);
 }
 
 // Handles messaging_postbacks events

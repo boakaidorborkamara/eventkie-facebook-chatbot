@@ -127,7 +127,7 @@ async function sendMessage(sender_psid, response) {
     };
 
     // Send the HTTP request to the Messenger Platform
-    let response = await axios.post(
+    await axios.post(
       `https://graph.facebook.com/v19.0/me/messages?qs=${PAGE_ACCESS_TOKEN}`,
       JSON.stringify(request_body)
     );
