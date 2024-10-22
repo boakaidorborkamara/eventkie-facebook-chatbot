@@ -152,6 +152,25 @@ async function sendMessage(sender_psid, response) {
   //   );
 }
 
+// async function typing(psid, status) {
+//   try {
+//     {
+//       recipient: {
+//         id: psid;
+//       }
+//       sender_action: status;
+//     }
+
+//     // Send the HTTP request to the Messenger Platform
+//     await axios.post(
+//       `https://graph.facebook.com/v19.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`,
+//       request_body
+//     );
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
+
 const handleGreetings = () => {};
 
 module.exports = {

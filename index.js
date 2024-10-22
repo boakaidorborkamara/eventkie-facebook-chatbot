@@ -30,6 +30,10 @@ async function handleMessage(senderPsid, receivedMessage) {
     };
 
     let response2 = {
+      text: "Here are some exciting event for the category you selected.",
+    };
+
+    let response3 = {
       attachment: {
         type: "template",
         payload: {
@@ -49,11 +53,11 @@ async function handleMessage(senderPsid, receivedMessage) {
                 {
                   type: "web_url",
                   url: "https://www.originalcoastclothing.com/",
-                  title: "View Website",
+                  title: "View Details",
                 },
                 {
                   type: "postback",
-                  title: "Start Chatting",
+                  title: "Book Now",
                   payload: "DEVELOPER_DEFINED_PAYLOAD",
                 },
               ],
@@ -72,11 +76,11 @@ async function handleMessage(senderPsid, receivedMessage) {
                 {
                   type: "web_url",
                   url: "https://www.originalcoastclothing.com/",
-                  title: "View Website",
+                  title: "View Details",
                 },
                 {
                   type: "postback",
-                  title: "Start Chatting",
+                  title: "Book Now",
                   payload: "DEVELOPER_DEFINED_PAYLOAD",
                 },
               ],
@@ -110,8 +114,36 @@ async function handleMessage(senderPsid, receivedMessage) {
       },
     };
 
+    let categories = {
+      text: "Event Catgories",
+      quick_replies: [
+        {
+          content_type: "text",
+          title: "Music 🎵",
+          payload: "MUSIC",
+        },
+        {
+          content_type: "text",
+          title: "Sports ⚽",
+          payload: "SPORTS",
+        },
+        {
+          content_type: "text",
+          title: "Business & Tech 💼",
+          payload: "BUSINESS_AND_TECH",
+        },
+        {
+          content_type: "text",
+          title: "All Events 📅",
+          payload: "ALL_EVENTS",
+        },
+      ],
+    };
+
     await chatbotService.sendMessage(senderPsid, response1);
     await chatbotService.sendMessage(senderPsid, response2);
+    await chatbotService.sendMessage(senderPsid, response3);
+    await chatbotService.sendMessage(senderPsid, categories);
   } else if (receivedMessage.attachments) {
     // Get the URL of the message attachment
     let attachmentUrl = receivedMessage.attachments[0].payload.url;
