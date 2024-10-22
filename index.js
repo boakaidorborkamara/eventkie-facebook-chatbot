@@ -35,7 +35,7 @@ async function handleMessage(senderPsid, receivedMessage) {
               title: "CIC Concert",
               image_url:
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYY0ETn4cSFt0dXSYjtUmXG2kbQ6oE3WJndA&s",
-              subtitle: "We have the right hat for everyone.",
+              subtitle: "🗓️Wed Oct 09 2024  Sharma House, 📍Brewevill Liberia",
               default_action: {
                 type: "web_url",
                 url: "https://www.originalcoastclothing.com/",
@@ -58,7 +58,7 @@ async function handleMessage(senderPsid, receivedMessage) {
               title: "MC Caro Concert",
               image_url:
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGAmf1AQS4nSvEA7rpjCq4KG8BYhstqHQCYw&s",
-              subtitle: "We have the right hat for everyone.",
+              subtitle: "🗓️Wed Oct 09 2024  Sharma House, 📍Brewevill Liberia",
               default_action: {
                 type: "web_url",
                 url: "https://www.originalcoastclothing.com/",
@@ -78,10 +78,10 @@ async function handleMessage(senderPsid, receivedMessage) {
               ],
             },
             {
-              title: "Welcome!",
+              title: "Anti Drugs Awareness",
               image_url:
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLVYPczi4Gol0cUgc33vC3-ZEQwcj2F0v8Zw&s",
-              subtitle: "We have the right hat for everyone.",
+              subtitle: "🗓️Wed Oct 09 2024  Sharma House, 📍Brewevill Liberia",
               default_action: {
                 type: "web_url",
                 url: "https://www.originalcoastclothing.com/",
@@ -91,11 +91,11 @@ async function handleMessage(senderPsid, receivedMessage) {
                 {
                   type: "web_url",
                   url: "https://www.originalcoastclothing.com/",
-                  title: "View Website",
+                  title: "View Details",
                 },
                 {
                   type: "postback",
-                  title: "Anti Drugs Awareness",
+                  title: "Book Now",
                   payload: "DEVELOPER_DEFINED_PAYLOAD",
                 },
               ],
