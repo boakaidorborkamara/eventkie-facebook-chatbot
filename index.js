@@ -25,7 +25,11 @@ async function handleMessage(senderPsid, receivedMessage) {
     //   text: `You sent the message: '${receivedMessage.text}'. Now send me an attachment!`,
     // };
 
-    response = {
+    let response1 = {
+      text: "Fetching events... please wait.",
+    };
+
+    let response2 = {
       attachment: {
         type: "template",
         payload: {
@@ -35,7 +39,7 @@ async function handleMessage(senderPsid, receivedMessage) {
               title: "CIC Concert",
               image_url:
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYY0ETn4cSFt0dXSYjtUmXG2kbQ6oE3WJndA&s",
-              subtitle: "🗓️Wed Oct 09 2024  Sharma House, 📍Brewevill Liberia",
+              subtitle: "🗓️Wed Oct 09 2024  📍Sharma House, Brewevill Liberia",
               default_action: {
                 type: "web_url",
                 url: "https://www.originalcoastclothing.com/",
@@ -58,7 +62,7 @@ async function handleMessage(senderPsid, receivedMessage) {
               title: "MC Caro Concert",
               image_url:
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGAmf1AQS4nSvEA7rpjCq4KG8BYhstqHQCYw&s",
-              subtitle: "🗓️Wed Oct 09 2024  Sharma House, 📍Brewevill Liberia",
+              subtitle: "🗓️Wed Oct 09 2024  📍Sharma House, Brewevill Liberia",
               default_action: {
                 type: "web_url",
                 url: "https://www.originalcoastclothing.com/",
@@ -81,7 +85,8 @@ async function handleMessage(senderPsid, receivedMessage) {
               title: "Anti Drugs Awareness",
               image_url:
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLVYPczi4Gol0cUgc33vC3-ZEQwcj2F0v8Zw&s",
-              subtitle: "🗓️Wed Oct 09 2024  Sharma House, 📍Brewevill Liberia",
+              subtitle:
+                "🗓️Wed Oct 09 2024    📍Sharma House, Brewevill Liberia",
               default_action: {
                 type: "web_url",
                 url: "https://www.originalcoastclothing.com/",
@@ -104,6 +109,9 @@ async function handleMessage(senderPsid, receivedMessage) {
         },
       },
     };
+
+    await chatbotService.sendMessage(senderPsid, response1);
+    await chatbotService.sendMessage(senderPsid, response2);
   } else if (receivedMessage.attachments) {
     // Get the URL of the message attachment
     let attachmentUrl = receivedMessage.attachments[0].payload.url;
@@ -137,7 +145,7 @@ async function handleMessage(senderPsid, receivedMessage) {
   }
 
   // Send the response message
-  await chatbotService.sendMessage(senderPsid, response);
+  // await chatbotService.sendMessage(senderPsid, response);
 }
 
 // Handles messaging_postbacks events
