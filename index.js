@@ -21,8 +21,42 @@ async function handleMessage(senderPsid, receivedMessage) {
   if (receivedMessage.text) {
     // Create the payload for a basic text message, which
     // will be added to the body of your request to the Send API
+    // response = {
+    //   text: `You sent the message: '${receivedMessage.text}'. Now send me an attachment!`,
+    // };
+
     response = {
-      text: `You sent the message: '${receivedMessage.text}'. Now send me an attachment!`,
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "generic",
+          elements: [
+            {
+              title: "Welcome!",
+              image_url:
+                "https://raw.githubusercontent.com/fbsamples/original-coast-clothing/main/public/styles/male-work.jpg",
+              subtitle: "We have the right hat for everyone.",
+              default_action: {
+                type: "web_url",
+                url: "https://www.originalcoastclothing.com/",
+                webview_height_ratio: "tall",
+              },
+              buttons: [
+                {
+                  type: "web_url",
+                  url: "https://www.originalcoastclothing.com/",
+                  title: "View Website",
+                },
+                {
+                  type: "postback",
+                  title: "Start Chatting",
+                  payload: "DEVELOPER_DEFINED_PAYLOAD",
+                },
+              ],
+            },
+          ],
+        },
+      },
     };
   } else if (receivedMessage.attachments) {
     // Get the URL of the message attachment
