@@ -61,7 +61,7 @@ function handleMessage(senderPsid, receivedMessage) {
 }
 
 // Handles messaging_postbacks events
-function handlePostback(senderPsid, receivedPostback) {
+async function handlePostback(senderPsid, receivedPostback) {
   let response;
 
   // Get the payload for the postback
@@ -70,7 +70,31 @@ function handlePostback(senderPsid, receivedPostback) {
 
   // handle get statarted
   if (payload === "GET_STARTED_PAYLOAD") {
-    response = { text: "About to get started" };
+    let response1 = {
+      text: "Hi there! 👋 Welcome to Ticketzor! Looking to attend an event? 🎉 I can help you find and purchase tickets right here. ",
+    };
+
+    let response2 = {
+      text: "How can I assist you today?",
+      quick_replies: [
+        {
+          content_type: "text",
+          title: "Red",
+          payload: "{POSTBACK_PAYLOAD}",
+          image_url: "http://example.com/img/red.png",
+        },
+        {
+          content_type: "text",
+          title: "Green",
+          payload: "{POSTBACK_PAYLOAD}",
+          image_url: "http://example.com/img/green.png",
+        },
+      ],
+    };
+
+    // Send the message to get started postback the postback
+    await chatbotService.sendMessage(senderPsid, response1);
+    await chatbotService.sendMessage(senderPsid, response2);
   }
 
   // Set the response based on the postback payload
@@ -80,7 +104,7 @@ function handlePostback(senderPsid, receivedPostback) {
     response = { text: "Oops, try sending another image." };
   }
   // Send the message to acknowledge the postback
-  chatbotService.sendMessage(senderPsid, response);
+  // chatbotService.sendMessage(senderPsid, response);
 }
 
 // Verify that the callback came from Facebook.
@@ -116,7 +140,7 @@ app.post("/messaging-webhook", (req, res) => {
   // Send a 200 OK response if this is a page webhook
 
   if (body.object === "page") {
-    body.entry.forEach(function (entry) {
+    body.entry.forEach(async function (entry) {
       // Gets the body of the webhook event
       let webhook_event = entry.messaging[0];
       console.log("web", webhook_event);
@@ -130,7 +154,7 @@ app.post("/messaging-webhook", (req, res) => {
       if (webhook_event.message) {
         handleMessage(sender_psid, webhook_event.message);
       } else if (webhook_event.postback) {
-        handlePostback(sender_psid, webhook_event.postback);
+        await handlePostback(sender_psid, webhook_event.postback);
       }
     });
 
