@@ -79,15 +79,13 @@ async function handlePostback(senderPsid, receivedPostback) {
       quick_replies: [
         {
           content_type: "text",
-          title: "Red",
-          payload: "{POSTBACK_PAYLOAD}",
-          image_url: "http://example.com/img/red.png",
+          title: "Browse Events 🎫",
+          payload: "BROWSE_EVENTS",
         },
         {
           content_type: "text",
-          title: "Green",
-          payload: "{POSTBACK_PAYLOAD}",
-          image_url: "http://example.com/img/green.png",
+          title: "Check My Tickets",
+          payload: "CHECK_MY_TICKETS",
         },
       ],
     };
