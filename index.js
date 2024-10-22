@@ -30,7 +30,7 @@ async function handleMessage(senderPsid, receivedMessage) {
     };
 
     let response2 = {
-      text: "Here are some exciting event for the category you selected.",
+      text: "Hey, I found 3 events for Music Category.",
     };
 
     let response3 = {
@@ -115,7 +115,7 @@ async function handleMessage(senderPsid, receivedMessage) {
     };
 
     let categories = {
-      text: "Event Catgories",
+      text: "You can also find events based on the categories below 👇",
       quick_replies: [
         {
           content_type: "text",
