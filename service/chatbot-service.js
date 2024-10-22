@@ -10,7 +10,7 @@ const setGetStartedAndWelcomeMessage = async () => {
 
   const data = {
     get_started: {
-      payload: "GET_STARTED",
+      payload: "GET_STARTED_PAYLOAD",
     },
     greeting: [
       {

@@ -66,9 +66,10 @@ function handlePostback(senderPsid, receivedPostback) {
 
   // Get the payload for the postback
   let payload = receivedPostback.payload;
+  console.log("payloaddd", payload);
 
   // handle get statarted
-  if (payload === "GET_STARTED") {
+  if (payload === "GET_STARTED_PAYLOAD") {
     response = { text: "About to get started" };
   }
 
