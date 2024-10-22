@@ -26,42 +26,42 @@ async function handleMessage(senderPsid, receivedMessage) {
         text: "Fetching events... please wait.",
       };
 
-      let response2 = {
-        attachment: {
-          type: "template",
-          payload: {
-            template_type: "TEMPLATE-TYPE",
-            elements: [
-              {
-                title: "Concert at Beach Arena",
-                image_url:
-                  "https://i0.wp.com/www.edenthub.com/wp-content/uploads/2019/12/SOG2.jpg?w=1200&ssl=1",
-                subtitle: "Join us for an amazing music experience!",
-                default_action: {
-                  type: "web_url",
-                  url: "https://example.com/concert-tickets",
-                  webview_height_ratio: "tall",
-                },
-                buttons: [
-                  {
-                    type: "web_url",
-                    url: "https://example.com/concert-tickets",
-                    title: "Buy Tickets",
-                  },
-                  {
-                    type: "postback",
-                    title: "More Info",
-                    payload: "MORE_INFO_CONCERT",
-                  },
-                ],
-              },
-            ],
-          },
-        },
-      };
+      // let response2 = {
+      //   attachment: {
+      //     type: "template",
+      //     payload: {
+      //       template_type: "TEMPLATE-TYPE",
+      //       elements: [
+      //         {
+      //           title: "Concert at Beach Arena",
+      //           image_url:
+      //             "https://i0.wp.com/www.edenthub.com/wp-content/uploads/2019/12/SOG2.jpg?w=1200&ssl=1",
+      //           subtitle: "Join us for an amazing music experience!",
+      //           default_action: {
+      //             type: "web_url",
+      //             url: "https://example.com/concert-tickets",
+      //             webview_height_ratio: "tall",
+      //           },
+      //           buttons: [
+      //             {
+      //               type: "web_url",
+      //               url: "https://example.com/concert-tickets",
+      //               title: "Buy Tickets",
+      //             },
+      //             {
+      //               type: "postback",
+      //               title: "More Info",
+      //               payload: "MORE_INFO_CONCERT",
+      //             },
+      //           ],
+      //         },
+      //       ],
+      //     },
+      //   },
+      // };
 
       await chatbotService.sendMessage(response1);
-      await chatbotService.sendMessage(response2);
+      // await chatbotService.sendMessage(response2);
     } else {
       let response1 = {
         text: "I’m sorry, I didn’t quite get that.",
