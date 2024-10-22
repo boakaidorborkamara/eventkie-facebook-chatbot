@@ -116,7 +116,7 @@ const sendQuickReplies = async (userId) => {
 };
 
 // Sends response messages via the Send API
-function sendMessage(sender_psid, response) {
+async function sendMessage(sender_psid, response) {
   // Construct the message body
   let request_body = {
     recipient: {

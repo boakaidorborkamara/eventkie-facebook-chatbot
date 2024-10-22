@@ -61,7 +61,7 @@ function handleMessage(senderPsid, receivedMessage) {
 }
 
 // Handles messaging_postbacks events
-async function handlePostback(senderPsid, receivedPostback) {
+const handlePostback = async (senderPsid, receivedPostback) => {
   let response;
 
   // Get the payload for the postback
@@ -103,7 +103,7 @@ async function handlePostback(senderPsid, receivedPostback) {
   }
   // Send the message to acknowledge the postback
   // chatbotService.sendMessage(senderPsid, response);
-}
+};
 
 // Verify that the callback came from Facebook.
 // function verifyRequestSignature(req, res, buf) {
