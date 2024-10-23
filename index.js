@@ -403,7 +403,7 @@ async function handlePostback(senderPsid, receivedPostback) {
           },
           {
             content_type: "text",
-            title: "Find a Specific Event",
+            title: "Book Specific Event",
             payload: "{POSTBACK_PAYLOAD}",
           },
         ],
