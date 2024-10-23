@@ -391,9 +391,9 @@ async function handlePostback(senderPsid, receivedPostback) {
 
       let response2 = {
         text: `What would you like to do? Type the number to select an option. 
-               1. Browse Upcoming Events
-               2. Search for a Specific Event 
-               3. Learn How It Works`,
+        1. Browse Upcoming Events
+        2. Search for a Specific Event 
+        3. Learn How It Works`,
         quick_replies: [
           {
             content_type: "text",
@@ -406,23 +406,6 @@ async function handlePostback(senderPsid, receivedPostback) {
             payload: "HOME",
           },
         ],
-        // quick_replies: [
-        //   {
-        //     content_type: "text",
-        //     title: "1️⃣ Browse Upcoming Events",
-        //     payload: "BROWSE_UPCOMING_EVENTS",
-        //   },
-        //   {
-        //     content_type: "text",
-        //     title: "2️⃣ Search for a Specific Event",
-        //     payload: "SEARCH_SPECIFIC_EVENT",
-        //   },
-        //   {
-        //     content_type: "text",
-        //     title: "3️⃣ Learn How It Works",
-        //     payload: "LEARN",
-        //   },
-        // ],
       };
 
       let response3 = {
