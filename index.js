@@ -398,13 +398,13 @@ async function handlePostback(senderPsid, receivedPostback) {
         quick_replies: [
           {
             content_type: "text",
-            title: "Browse Events",
-            payload: "{POSTBACK_PAYLOAD}",
+            title: "📅Browse Events",
+            payload: "BROWSE_UPCOMING_EVENTS",
           },
           {
             content_type: "text",
-            title: "Book Specific Event",
-            payload: "{POSTBACK_PAYLOAD}",
+            title: "🎉Book Specific Event",
+            payload: "FIND_SPECIFIC_EVENT",
           },
         ],
       };
