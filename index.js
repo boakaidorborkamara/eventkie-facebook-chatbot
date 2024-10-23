@@ -103,7 +103,9 @@ async function handleMessage(senderPsid, receivedMessage) {
   if (receivedMessage.text) {
     console.log("recied message", receivedMessage);
     console.log("text", receivedMessage.text);
-    console.log("quick eply", receivedMessage.quick_reply);
+    console.log("quick eply", typeof receivedMessage.quick_reply);
+    console.log("quick eply obj", Object(receivedMessage.quick_reply));
+
     // console.log("recied message", receivedMessage.quick_reply.payload);
     // if (receivedMessage.quick_reply.payload === "FIND_SPECIFIC_EVEN") {
     //   console.log("equal");
