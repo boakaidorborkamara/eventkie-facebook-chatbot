@@ -97,6 +97,7 @@ app.get("/messaging-webhook", (req, res) => {
 
 // Handles messages events
 async function handleMessage(senderPsid, receivedMessage) {
+  console.log("recieved message", receivedMessage);
   let response;
 
   // Checks if the message contains text
