@@ -390,20 +390,45 @@ async function handlePostback(senderPsid, receivedPostback) {
       };
 
       let response2 = {
-        text: "What would you like to do? Type the number to select an option . 1. Browse Upcoming Events <br/> 2. Search for a Specific Event <br/> 3. Learn How It Works",
-        quick_replies: [
-          {
-            content_type: "text",
-            title: "Go Back",
-            payload: "BACK",
+        attachment: {
+          type: "template",
+          payload: {
+            template_type: "button",
+            text: "What would you like to do?",
+            buttons: [
+              {
+                type: "web_url",
+                url: "https://www.messenger.com",
+                title: "Browse Upcoming Events",
+              },
+              {
+                type: "web_url",
+                url: "https://www.messenger.com",
+                title: "Search for a Specific Event",
+              },
+            ],
           },
-          {
-            content_type: "text",
-            title: "Home",
-            payload: "HOME",
-          },
-        ],
+        },
       };
+
+      // let response2 = {
+      //   text: `What would you like to do? Type the number to select an option .
+      //   1. Browse Upcoming Events
+      //   2. Search for a Specific Event
+      //   3. Learn How It Works`,
+      //   quick_replies: [
+      //     {
+      //       content_type: "text",
+      //       title: "Go Back",
+      //       payload: "BACK",
+      //     },
+      //     {
+      //       content_type: "text",
+      //       title: "Home",
+      //       payload: "HOME",
+      //     },
+      //   ],
+      // };
 
       let response3 = {
         text: "Type a number for one of the options above ",
