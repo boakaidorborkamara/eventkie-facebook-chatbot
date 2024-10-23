@@ -104,7 +104,7 @@ async function handleMessage(senderPsid, receivedMessage) {
     let quick_reply = Object(receivedMessage.quick_reply);
 
     // send response when FindSpecificEvent is clicked
-    if (quick_reply.payload === "FIND_SPECIFIC_EVEN") {
+    if (quick_reply.payload === "FIND_SPECIFIC_EVENT") {
       let response1 = {
         text: "Got it! Please enter the name or keywords of the event you're looking for. 🧐",
       };
