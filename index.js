@@ -394,7 +394,7 @@ async function handlePostback(senderPsid, receivedPostback) {
       };
 
       let response3 = {
-        text: "Choose your next step using the options below.",
+        text: "Choose an option below.",
         quick_replies: [
           {
             content_type: "text",
