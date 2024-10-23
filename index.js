@@ -13,6 +13,7 @@ const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 //chatbot service
 const chatbotService = require("./service/chatbot-service");
 
+let session = {};
 // Verify that the callback came from Facebook.
 // function verifyRequestSignature(req, res, buf) {
 //   var signature = req.headers["x-hub-signature-256"];
@@ -384,8 +385,8 @@ async function handlePostback(senderPsid, receivedPostback) {
     let payload = receivedPostback.payload;
     console.log("payloaddd", payload);
 
-    // handle navigating to home from the main menu
-    if (payload === "HOME") {
+    // handle get statarted
+    if (payload === "GET_STARTED_PAYLOAD") {
       let response1 = {
         text: "Hi there! 🎉 Welcome to Ticketzor! I’m exicted to help you find and book events in Liberia. 🎟️ ",
       };
@@ -410,14 +411,17 @@ async function handlePostback(senderPsid, receivedPostback) {
         ],
       };
 
+      // update user session
+      updateSession(senderPsid, "Get Started", null);
+
       // Send the message
       await chatbotService.sendMessage(senderPsid, response1);
       await chatbotService.sendMessage(senderPsid, response2);
       await chatbotService.sendMessage(senderPsid, response3);
     }
 
-    // handle get statarted
-    if (payload === "GET_STARTED_PAYLOAD") {
+    // handle navigating to home from the main menu
+    if (payload === "HOME") {
       let response1 = {
         text: "Hi there! 🎉 Welcome to Ticketzor! I’m exicted to help you find and book events in Liberia. 🎟️ ",
       };
@@ -493,3 +497,12 @@ app.listen(3600, () => {
   chatbotService.setPersistentMenu;
   chatbotService.setGetStartedAndWelcomeMessage;
 });
+
+function updateSession(senderPsid, current_action, previous_action) {
+  session[senderPsid] = {
+    current_action: current_action,
+    previous_action: previous_action,
+  };
+
+  console.log("session", session);
+}
