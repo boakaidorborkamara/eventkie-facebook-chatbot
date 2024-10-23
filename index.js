@@ -394,7 +394,19 @@ async function handlePostback(senderPsid, receivedPostback) {
       };
 
       let response3 = {
-        text: "Pick a number for your next step.  \n\n 👉1. Browse Upcoming Events \n 👉2. Find a Specific Event \n",
+        text: "Choose your next step using the options below.",
+        quick_replies: [
+          {
+            content_type: "text",
+            title: "Browse Events",
+            payload: "{POSTBACK_PAYLOAD}",
+          },
+          {
+            content_type: "text",
+            title: "Find a Specific Event",
+            payload: "{POSTBACK_PAYLOAD}",
+          },
+        ],
       };
 
       // Send the message
