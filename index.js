@@ -390,30 +390,46 @@ async function handlePostback(senderPsid, receivedPostback) {
       };
 
       let response2 = {
-        text: "To get started, you can:",
+        text: "Select an option to continue: 1 Browse Upcoming Events 2️ Search for a Specific Event 3️ Learn How It Works",
         quick_replies: [
           {
             content_type: "text",
-            title: "1️⃣ Browse Upcoming Events",
-            payload: "BROWSE_UPCOMING_EVENTS",
+            title: "Go Back",
+            payload: "BACK",
           },
           {
             content_type: "text",
-            title: "2️⃣ Search for a Specific Event",
-            payload: "SEARCH_SPECIFIC_EVENT",
-          },
-          {
-            content_type: "text",
-            title: "3️⃣ Learn How It Works",
-            payload: "LEARN",
+            title: "Home",
+            payload: "HOME",
           },
         ],
+        // quick_replies: [
+        //   {
+        //     content_type: "text",
+        //     title: "1️⃣ Browse Upcoming Events",
+        //     payload: "BROWSE_UPCOMING_EVENTS",
+        //   },
+        //   {
+        //     content_type: "text",
+        //     title: "2️⃣ Search for a Specific Event",
+        //     payload: "SEARCH_SPECIFIC_EVENT",
+        //   },
+        //   {
+        //     content_type: "text",
+        //     title: "3️⃣ Learn How It Works",
+        //     payload: "LEARN",
+        //   },
+        // ],
+      };
+
+      let response3 = {
+        text: "Type a number for one of the options above ",
       };
 
       // Send the message to get started postback the postback
       await chatbotService.sendMessage(senderPsid, response1);
-
       await chatbotService.sendMessage(senderPsid, response2);
+      await chatbotService.sendMessage(senderPsid, response3);
     }
 
     // handle browse event
