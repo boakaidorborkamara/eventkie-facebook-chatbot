@@ -102,6 +102,8 @@ async function handleMessage(senderPsid, receivedMessage) {
   // Checks if the message contains text
   if (receivedMessage.text) {
     console.log("recied message", receivedMessage);
+    console.log("text", receivedMessage.text);
+    console.log("quick eply", receivedMessage.quick_reply);
     // console.log("recied message", receivedMessage.quick_reply.payload);
     // if (receivedMessage.quick_reply.payload === "FIND_SPECIFIC_EVEN") {
     //   console.log("equal");
@@ -382,6 +384,38 @@ async function handlePostback(senderPsid, receivedPostback) {
     // Get the payload for the postback
     let payload = receivedPostback.payload;
     console.log("payloaddd", payload);
+
+    // handle navigating to home from the main menu
+    if (payload === "HOME") {
+      let response1 = {
+        text: "Hi there! 🎉 Welcome to Ticketzor! I’m exicted to help you find and book events in Liberia. 🎟️ ",
+      };
+
+      let response2 = {
+        text: "To start, tell me how I can help you!",
+      };
+
+      let response3 = {
+        text: "Choose an option below.",
+        quick_replies: [
+          {
+            content_type: "text",
+            title: "🎉Book Specific Event",
+            payload: "FIND_SPECIFIC_EVENT",
+          },
+          {
+            content_type: "text",
+            title: "📅Browse Events",
+            payload: "BROWSE_UPCOMING_EVENTS",
+          },
+        ],
+      };
+
+      // Send the message
+      await chatbotService.sendMessage(senderPsid, response1);
+      await chatbotService.sendMessage(senderPsid, response2);
+      await chatbotService.sendMessage(senderPsid, response3);
+    }
 
     // handle get statarted
     if (payload === "GET_STARTED_PAYLOAD") {
