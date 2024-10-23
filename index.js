@@ -99,11 +99,10 @@ app.get("/messaging-webhook", (req, res) => {
 async function handleMessage(senderPsid, receivedMessage) {
   let response;
 
-  console.log("recied message", receivedMessage);
-  console.log("recied message", receivedMessage.quick_reply.payload);
-
   // Checks if the message contains text
   if (receivedMessage.text) {
+    console.log("recied message", receivedMessage);
+    // console.log("recied message", receivedMessage.quick_reply.payload);
     // if (receivedMessage.quick_reply.payload === "FIND_SPECIFIC_EVEN") {
     //   console.log("equal");
     //   // let response1 = {
