@@ -390,32 +390,14 @@ async function handlePostback(senderPsid, receivedPostback) {
       };
 
       let response2 = {
-        text: `What would you like to do❓. \n\n Choose an option:  \n\n 👉1. Browse Upcoming Events \n 👉2. Find a Specific Event \n 👉3. Learn How It Works`,
+        text: "To start, tell me how I can help you!",
       };
 
       let response3 = {
-        attachment: {
-          type: "template",
-          payload: {
-            template_type: "button",
-            text: "",
-            buttons: [
-              {
-                type: "web_url",
-                url: "https://www.messenger.com",
-                title: "Back",
-              },
-              {
-                type: "web_url",
-                url: "https://www.messenger.com",
-                title: "Home",
-              },
-            ],
-          },
-        },
+        text: "Pick a number for your next step.  \n\n 👉1. Browse Upcoming Events \n 👉2. Find a Specific Event \n",
       };
 
-      // Send the message to get started postback the postback
+      // Send the message
       await chatbotService.sendMessage(senderPsid, response1);
       await chatbotService.sendMessage(senderPsid, response2);
       await chatbotService.sendMessage(senderPsid, response3);
