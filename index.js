@@ -386,11 +386,11 @@ async function handlePostback(senderPsid, receivedPostback) {
     // handle get statarted
     if (payload === "GET_STARTED_PAYLOAD") {
       let response1 = {
-        text: "Hi there! 🎉 Welcome to Ticketzor! I’m here to help you find and book events in Liberia. 🎟️ ",
+        text: "Hi there! 🎉 Welcome to Ticketzor! I’m exicted to help you find and book events in Liberia. 🎟️ ",
       };
 
       let response2 = {
-        text: `What would you like to do? Type the number to select an option. \n\n 1. Browse Upcoming Events \n 2. Search for a Specific Event \n 3. Learn How It Works`,
+        text: `What would you like to do❓. \n\n Choose an option:  \n\n 👉1. Browse Upcoming Events \n 👉2. Find a Specific Event \n 👉3. Learn How It Works`,
       };
 
       let response3 = {
