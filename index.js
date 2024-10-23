@@ -101,20 +101,16 @@ async function handleMessage(senderPsid, receivedMessage) {
 
   // Checks if the message contains text
   if (receivedMessage.text) {
-    console.log("recied message", receivedMessage);
-    console.log("text", receivedMessage.text);
-    console.log("quick eply", typeof receivedMessage.quick_reply);
     let quick_reply = Object(receivedMessage.quick_reply);
-    console.log("quick eply payload", quick_reply.payload);
 
-    // console.log("recied message", receivedMessage.quick_reply.payload);
-    // if (receivedMessage.quick_reply.payload === "FIND_SPECIFIC_EVEN") {
-    //   console.log("equal");
-    //   // let response1 = {
-    //   //   text: "Got it! Please enter the name or keywords of the event you're looking for. 🧐",
-    //   // };
-    //   // await chatbotService.sendMessage(senderPsid, response1);
-    // }
+    // send response when FindSpecificEvent is clicked
+    if (quick_reply.payload === "FIND_SPECIFIC_EVEN") {
+      let response1 = {
+        text: "Got it! Please enter the name or keywords of the event you're looking for. 🧐",
+      };
+      await chatbotService.sendMessage(senderPsid, response1);
+    }
+
     // Create the payload for a basic text message, which
     // will be added to the body of your request to the Send API
     // response = {
