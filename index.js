@@ -101,28 +101,23 @@ async function handleMessage(senderPsid, receivedMessage) {
 
   // Checks if the message contains text
   if (receivedMessage.text) {
-    if (receivedMessage.quick_reply.payload === "FIND_SPECIFIC_EVEN") {
-      let response1 = {
-        text: "Got it! Please enter the name or keywords of the event you're looking for. 🧐",
-      };
-
-      await chatbotService.sendMessage(senderPsid, response1);
-    }
-
+    // if (receivedMessage.quick_reply.payload === "FIND_SPECIFIC_EVEN") {
+    //   let response1 = {
+    //     text: "Got it! Please enter the name or keywords of the event you're looking for. 🧐",
+    //   };
+    //   await chatbotService.sendMessage(senderPsid, response1);
+    // }
     // Create the payload for a basic text message, which
     // will be added to the body of your request to the Send API
     // response = {
     //   text: `You sent the message: '${receivedMessage.text}'. Now send me an attachment!`,
     // };
-
     // let response1 = {
     //   text: "Fetching events... please wait.",
     // };
-
     // let response2 = {
     //   text: "Hey, I found 3 events that match Music Category.",
     // };
-
     // let response3 = {
     //   attachment: {
     //     type: "template",
@@ -203,7 +198,6 @@ async function handleMessage(senderPsid, receivedMessage) {
     //     },
     //   },
     // };
-
     // let categories = {
     //   text: "You can also find events based on the categories below 👇",
     //   quick_replies: [
@@ -229,17 +223,14 @@ async function handleMessage(senderPsid, receivedMessage) {
     //     },
     //   ],
     // };
-
     // await chatbotService.sendMessage(senderPsid, response1);
     // await chatbotService.sendMessage(senderPsid, response2);
     // await chatbotService.sendMessage(senderPsid, response3);
     // await chatbotService.sendMessage(senderPsid, categories);
-
     //===================
     //  let response1 = {
     //    text: "Fetching events... please wait.",
     //  };
-
     //  let response2 = {
     //    attachment: {
     //      type: "template",
@@ -319,7 +310,6 @@ async function handleMessage(senderPsid, receivedMessage) {
     //      },
     //    },
     //  };
-
     //  let categories = {
     //    quick_replies: [
     //      {
@@ -344,7 +334,6 @@ async function handleMessage(senderPsid, receivedMessage) {
     //      },
     //    ],
     //  };
-
     //  await chatbotService.sendMessage(senderPsid, response1);
     //  await chatbotService.sendMessage(senderPsid, response2);
     //  await chatbotService.sendMessage(senderPsid, categories);
